@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lead Genration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      // funjction for submit the form data
+      function SubmitData() {
+        // Creating Our XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        let formData = {
+          lp_campaign_id: $('#lp_campaign_id').val(),
+          first_name: $('#first_name').val(),
+          last_name: $('#last_name').val(),
+          phone_cell: $('#phone_cell').val(),
+          address: $('#address').val(),
+          city: $('#city').val(),
+          state: $('#state').val(),
+          zip_code: $('#zip_code').val(),
+          email_address: $('#email_address').val(),
+          property_type: $('#property_type').val(),
+          credit_dropdown: $('#credit_dropdown').val(),
+          property_use: $('#property_use').val(),
+          military_status: $('#military_status').val(),
+          loan_type: $('#loan_type').val(),
+          interest_rate: $('#interest_rate').val(),
+          mortgage_balance: $('#mortgage_balance').val(),
+          home_value: $('#home_value').val(),
+          cash_out: $('#cash_out').val(),
+          loan_amount: $('#loan_amount').val(),
+          mortgage_type: $('#mortgage_type').val(),
+          occupation_dropdown: $('#occupation_dropdown').val(),
+          loan_purpose: $('#loan_purpose').val(),
+        };
+
+        // Making our connection
+        var url = 'http://localhost:2000/auth/lead-add';
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader(
+          'Content-type',
+          'application/x-www-form-urlencoded'
+        );
+
+        // function execute after request is successful
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+          }
+        };
+        // Sending our request
+        let finalData =
+          `lp_campaign_id=${formData.lp_campaign_id}` +
+          '&' +
+          `first_name=${formData.first_name}` +
+          '&' +
+          `last_name=${formData.last_name}` +
+          '&' +
+          `phone_cell=${formData.phone_cell}` +
+          '&' +
+          `address=${formData.address}` +
+          '&' +
+          `city=${formData.city}` +
+          '&' +
+          `state=${formData.state}` +
+          '&' +
+          `zip_code=${formData.zip_code}` +
+          '&' +
+          `email_address=${formData.email_address}` +
+          '&' +
+          `property_type=${formData.property_type}` +
+          '&' +
+          `credit_dropdown=${formData.credit_dropdown}` +
+          '&' +
+          `property_use=${formData.property_use}` +
+          '&' +
+          `military_status=${formData.military_status}` +
+          '&' +
+          `loan_type=${formData.loan_type}` +
+          '&' +
+          `interest_rate=${formData.interest_rate}` +
+          '&' +
+          `mortgage_balance=${formData.mortgage_balance}` +
+          '&' +
+          `home_value=${formData.home_value}` +
+          '&' +
+          `cash_out=${formData.cash_out}` +
+          '&' +
+          `loan_amount=${formData.loan_amount}` +
+          '&' +
+          `mortgage_type=${formData.mortgage_type}` +
+          '&' +
+          `occupation_dropdown=${formData.occupation_dropdown}` +
+          '&' +
+          `loan_purpose=${formData.loan_purpose}`;
+
+        xhr.send(finalData);
+
+        xhr.onload = function () {
+          console.log(this.responseText);
+          console.log(JSON.parse(this.responseText));
+          let leadid = JSON.parse(this.responseText);
+          document.getElementById('new_lead_id').innerHTML = leadid.data.Leadid;
+        };
+      }
+    </script>
+
+    <!-- Style code started from here   -->
+    <style>
+      .heading {
+        color: #75a2da;
+        font-family: auto;
+      }
+      .content-block {
+        padding: 10px 43px;
+        font-family: emoji;
+      }
+
+      .final-result {
+        margin: 10px 31px 50px 31px;
+        border: 1px solid #b7b3b3;
+        padding: 6px;
+        background-color: #d8dec6ad;
+      }
+      #style_new_lead_id {
+        font-size: 20px;
+        color: #219d21;
+        font-weight: 700;
+      }
+      #new_lead_id {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="heading">Lead Generation Form</h1>
+        </div>
+      </div>
+      <div class="row content-block">
+        <form method="post">
+          <div class="row">
+            <input
+              id="leadid_token"
+              name="universal_leadid"
+              type="hidden"
+              value=""
+            />
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Campaign Id</label>
+                <select
+                  name="campaign"
+                  id="lp_campaign_id"
+                  class="form-control"
+                >
+                  <option>Select Option</option>
+                  <option name="nld">NLD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="first_name"
+                  id="first_name"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="last_name"
+                  id="last_name"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <small
+                  class="error"
+                  style="color: blue; font-size: 16px; font-weight: 800"
+                ></small>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="phone_home"
+                  id="phone_cell"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  required
+                  id="address"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="city"
+                  id="city"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>State</label>
+                <select name="state" class="form-control" required id="state">
+                  <option value="">Please Select</option>
+                  <option value="AK" selected>Alaska</option>
+                  <option value="AL" selected>Alabama</option>
+                  <option value="AS" selected>American Samoa</option>
+                  <option value="AZ" selected>Arizona</option>
+                  <option value="AR" selected>Arkansas</option>
+                  <option value="CA" selected>California</option>
+                  <option value="CO" selected>Colorado</option>
+                  <option value="CT" selected>Connecticut</option>
+                  <option value="DE" selected>Delaware</option>
+                  <option value="DC" selected>District of Columbia</option>
+                  <option value="FM" selected>
+                    Federated States of Micronesia
+                  </option>
+                  <option value="FL" selected>Florida</option>
+                  <option value="GA" selected>Georgia</option>
+                  <option value="GU" selected>Guam</option>
+                  <option value="HI" selected>Hawaii</option>
+                  <option value="ID" selected>Idaho</option>
+                  <option value="IL" selected>Illinois</option>
+                  <option value="IN" selected>Indiana</option>
+                  <option value="IA" selected>Iowa</option>
+                  <option value="KS" selected>Kansas</option>
+                  <option value="KY" selected>Kentucky</option>
+                  <option value="LA" selected>Louisiana</option>
+                  <option value="ME" selected>Maine</option>
+                  <option value="MH" selected>Marshall Islands</option>
+                  <option value="MD" selected>Maryland</option>
+                  <option value="MA" selected>Massachusetts</option>
+                  <option value="MI" selected>Michigan</option>
+                  <option value="MN" selected>Minnesota</option>
+                  <option value="MS" selected>Mississippi</option>
+                  <option value="MO" selected>Missouri</option>
+                  <option value="MT" selected>Montana</option>
+                  <option value="NE" selected>Nebraska</option>
+                  <option value="NV" selected>Nevada</option>
+                  <option value="NH" selected>New Hampshire</option>
+                  <option value="NJ" selected>New Jersey</option>
+                  <option value="NM" selected>New Mexico</option>
+                  <option value="NY" selected>New York</option>
+                  <option value="NC" selected>North Carolina</option>
+                  <option value="ND" selected>North Dakota</option>
+                  <option value="MP" selected>Northern Mariana Islands</option>
+                  <option value="OH" selected>Ohio</option>
+                  <option value="OK" selected>Oklahoma</option>
+                  <option value="OR" selected>Oregon</option>
+                  <option value="PW" selected>Palau</option>
+                  <option value="PA" selected>Pennsylvania</option>
+                  <option value="PR" selected>Puerto Rico</option>
+                  <option value="RI" selected>Rhode Island</option>
+                  <option value="SC" selected>South Carolina</option>
+                  <option value="SD" selected>South Dakota</option>
+                  <option value="TN" selected>Tennessee</option>
+                  <option value="TX" selected>Texas</option>
+                  <option value="UT" selected>Utah</option>
+                  <option value="VT" selected>Vermont</option>
+                  <option value="VI" selected>Virgin Islands</option>
+                  <option value="VA" selected>Virginia</option>
+                  <option value="WA" selected>Washington</option>
+                  <option value="WV" selected>West Virginia</option>
+                  <option value="WI" selected>Wisconsin</option>
+                  <option value="WY" selected>Wyoming</option>
+                  <option value="AE" selected>Armed Forces Africa</option>
+                  <option value="AA" selected>
+                    Armed Forces Americas (except Canada)
+                  </option>
+                  <option value="AE" selected>Armed Forces Canada</option>
+                  <option value="AE" selected>Armed Forces Europe</option>
+                  <option value="AE" selected>Armed Forces Middle East</option>
+                  <option value="AP" selected>Armed Forces Pacific</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Zipcode</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="zip_code"
+                  id="zip_code"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>E-Mail Address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  required
+                  name="email_address"
+                  id="email_address"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Interest Rate</label>
+                <input
+                  type="text"
+                  name="interest_rate"
+                  id="interest_rate"
+                  value=""
+                  required
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Mortgage Balance</label>
+                <input
+                  type="text"
+                  id="mortgage_balance"
+                  name="mortgage_balance"
+                  value=""
+                  required
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Cashout </label>
+                <input
+                  type="text"
+                  id="cash_out"
+                  name="cashout"
+                  value=""
+                  required
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Loan Amount</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="loan_amount"
+                  id="loan_amount"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Mortgage Type</label>
+                <select
+                  name="mortgage_type"
+                  class="form-control"
+                  required
+                  id="mortgage_type"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="Purchase">Purchase</option>
+                  <option value="Refinance">Refinance</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Loan Type</label>
+                <select
+                  name="loan_type"
+                  class="form-control"
+                  required
+                  id="loan_type"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="Conventional">Conventional</option>
+                  <option value="VA">VA</option>
+                  <option value="FHA">FHA</option>
+                </select>
+                <!--<input type="text" name="loan_type" value="FHA" required  class="form-control" />-->
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Military Status</label>
+                <select
+                  name="military_status"
+                  class="form-control"
+                  required
+                  id="military_status"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Home Value</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="home_value"
+                  id="home_value"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Property Type</label>
+                <select
+                  name="property_type"
+                  class="form-control"
+                  required
+                  id="property_type"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="co-op">Co-op</option>
+                  <option value="condo">Condo</option>
+                  <option value="manufactured">Manufactured</option>
+                  <option value="multi-family">Multi-Family</option>
+                  <option value="single family">Single Family</option>
+                  <option value="town home">Town Home</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Credit</label>
+                <select
+                  name="credit_dropdown"
+                  class="form-control"
+                  required
+                  id="credit_dropdown"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="600 - 659">600 - 659</option>
+                  <option value="660 - 719">660 - 719</option>
+                  <option value="720 and above">720 and above</option>
+                  <option value="Below 600">Below 600</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Occupation</label>
+                <select
+                  name="occupation_dropdown"
+                  class="form-control"
+                  required
+                  id="occupation_dropdown"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="employed">Employed</option>
+                  <option value="retired">Retired</option>
+                  <option value="self employed">Self Employed</option>
+                  <option value="unemployed">Unemployed</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Loan Purpose</label>
+                <select
+                  name="loan_purpose"
+                  class="form-control"
+                  required
+                  id="loan_purpose"
+                >
+                  <option value="refinance">Refinance</option>
+                  <option value="cash-out">Cash-out</option>
+                  <option value="debt consolidation">Debt Consolidation</option>
+                  <option value="other">Other</option>
+                  <option value="purchase">Purchase</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Property Use</label>
+                <select
+                  name="property_use"
+                  class="form-control"
+                  required
+                  id="property_use"
+                >
+                  <option value="" selected>Select an option</option>
+                  <option value="investment property">
+                    Investment Property
+                  </option>
+                  <option value="primary residence">Primary Residence</option>
+                  <option value="second home">Second Home</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Mortgage Type</label>
+                <input
+                  type="text"
+                  name="jornaya_leadid"
+                  id="mortgage_type"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-success" onclick="SubmitData()">
+          Submit data
+        </button>
+
+        <span
+          >By clicking "<b>Submit Now!</b>" you agree to the Terms of Service
+          and Privacy Policy and to share your information with our lenders and
+          other marketing partners, and for them to contact you at the phone
+          number and email provided above (including through automated means;
+          e.g. autodialing, text and pre-recorded messaging) via telephone,
+          mobile device (including SMS and MMS) and/or email, even if your
+          telephone number is currently listed on any state, federal or
+          corporate Do Not Call list. Standard message and data rates may
+          apply.</span
+        >
+      </div>
+      <div class="row final-result" id="final-response-block">
+        <div class="col-12">
+          <p id="style_new_lead_id">
+            Jornaya Id : <span id="new_lead_id"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script id="LeadiDscript" type="text/javascript">
+    (function () {
+      var s = document.createElement('script');
+      s.id = 'LeadiDscript_campaign';
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src =
+        '//create.lidstatic.com/campaign/ccccdf2e-7115-55ea-3af5-4e8e7a0bce6b.js?snippet_version=2&f=reset';
+      var LeadiDscript = document.getElementById('LeadiDscript');
+      LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
+    })();
+  </script>
+  <noscript
+    ><img
+      src="//create.leadid.com/noscript.gif?lac=D329F32E-D58C-E99B-3D7A-5DFDC62216AF&lck=ccccdf2e-7115-55ea-3af5-4e8e7a0bce6b&snippet_version=2"
+  /></noscript>
+</html>
