@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -r dotenv/config starter.js",
+    "dev": "nodemon -r dotenv/config starter.js",
+    "start": "node -r dotenv/config starter.js",
     "build": "babel ./ -d dist/",
     "lint": "eslint app/",
     "lint:fix": "eslint --fix app/"
