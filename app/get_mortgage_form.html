@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lead Genration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      // funjction for submit the form data
+      function GetDetails() {
+        // Creating Our XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        let formData = {
+          callerid: $('#callerid').val(),
+          first_name: $('#first_name').val(),
+          last_name: $('#last_name').val(),
+          email: $('#email').val(),
+          address: $('#address').val(),
+          city: $('#city').val(),
+          state: $('#state').val(),
+          zip_code: $('#zip_code').val(),
+          lead_id: $('#lead_id').val(),
+        };
+        let finalData =
+          `callerid=${formData.callerid}` +
+          '&' +
+          `first_name=${formData.first_name}` +
+          '&' +
+          `last_name=${formData.last_name}` +
+          '&' +
+          `email=${formData.email}` +
+          '&' +
+          `address1=${formData.address}` +
+          '&' +
+          `city=${formData.city}` +
+          '&' +
+          `state=${formData.state}` +
+          '&' +
+          `zip=${formData.zip_code}` +
+          '&' +
+          `lead_id=${formData.lead_id}`;
+        // Making our connection
+        var url =
+          `https://display.ringba.com/enrich/2055879815554139326?` + finalData;
+        xhr.open('GET', url, true);
+
+        xhr.setRequestHeader(
+          'Content-type',
+          'application/x-www-form-urlencoded'
+        );
+
+        // function execute after request is successful
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+          }
+        };
+        // Sending our request
+
+        xhr.send();
+
+        xhr.onload = function () {
+          console.log('get response', this.responseText);
+        };
+      }
+    </script>
+
+    <!-- Style code started from here   -->
+    <style>
+      .heading {
+        color: #75a2da;
+        font-family: auto;
+      }
+      .content-block {
+        padding: 10px 43px;
+        font-family: emoji;
+      }
+
+      .final-result {
+        margin: 10px 31px 50px 31px;
+        border: 1px solid #b7b3b3;
+        padding: 6px;
+        background-color: #d8dec6ad;
+      }
+      #style_new_lead_id {
+        font-size: 20px;
+        color: #219d21;
+        font-weight: 700;
+      }
+      #new_lead_id {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="heading">Lead Info</h1>
+        </div>
+      </div>
+
+      <div class="row content-block">
+        <form method="get">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Lead ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="lead_id"
+                  id="lead_id"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Caller ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="callerid"
+                  id="callerid"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="first_name"
+                  id="first_name"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="last_name"
+                  id="last_name"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Email</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="email"
+                  id="email"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Address1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  required
+                  id="address"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="city"
+                  id="city"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>State</label>
+                <select name="state" class="form-control" required id="state">
+                  <option value="">Please Select</option>
+                  <option value="AK" selected>Alaska</option>
+                  <option value="AL" selected>Alabama</option>
+                  <option value="AS" selected>American Samoa</option>
+                  <option value="AZ" selected>Arizona</option>
+                  <option value="AR" selected>Arkansas</option>
+                  <option value="CA" selected>California</option>
+                  <option value="CO" selected>Colorado</option>
+                  <option value="CT" selected>Connecticut</option>
+                  <option value="DE" selected>Delaware</option>
+                  <option value="DC" selected>District of Columbia</option>
+                  <option value="FM" selected>
+                    Federated States of Micronesia
+                  </option>
+                  <option value="FL" selected>Florida</option>
+                  <option value="GA" selected>Georgia</option>
+                  <option value="GU" selected>Guam</option>
+                  <option value="HI" selected>Hawaii</option>
+                  <option value="ID" selected>Idaho</option>
+                  <option value="IL" selected>Illinois</option>
+                  <option value="IN" selected>Indiana</option>
+                  <option value="IA" selected>Iowa</option>
+                  <option value="KS" selected>Kansas</option>
+                  <option value="KY" selected>Kentucky</option>
+                  <option value="LA" selected>Louisiana</option>
+                  <option value="ME" selected>Maine</option>
+                  <option value="MH" selected>Marshall Islands</option>
+                  <option value="MD" selected>Maryland</option>
+                  <option value="MA" selected>Massachusetts</option>
+                  <option value="MI" selected>Michigan</option>
+                  <option value="MN" selected>Minnesota</option>
+                  <option value="MS" selected>Mississippi</option>
+                  <option value="MO" selected>Missouri</option>
+                  <option value="MT" selected>Montana</option>
+                  <option value="NE" selected>Nebraska</option>
+                  <option value="NV" selected>Nevada</option>
+                  <option value="NH" selected>New Hampshire</option>
+                  <option value="NJ" selected>New Jersey</option>
+                  <option value="NM" selected>New Mexico</option>
+                  <option value="NY" selected>New York</option>
+                  <option value="NC" selected>North Carolina</option>
+                  <option value="ND" selected>North Dakota</option>
+                  <option value="MP" selected>Northern Mariana Islands</option>
+                  <option value="OH" selected>Ohio</option>
+                  <option value="OK" selected>Oklahoma</option>
+                  <option value="OR" selected>Oregon</option>
+                  <option value="PW" selected>Palau</option>
+                  <option value="PA" selected>Pennsylvania</option>
+                  <option value="PR" selected>Puerto Rico</option>
+                  <option value="RI" selected>Rhode Island</option>
+                  <option value="SC" selected>South Carolina</option>
+                  <option value="SD" selected>South Dakota</option>
+                  <option value="TN" selected>Tennessee</option>
+                  <option value="TX" selected>Texas</option>
+                  <option value="UT" selected>Utah</option>
+                  <option value="VT" selected>Vermont</option>
+                  <option value="VI" selected>Virgin Islands</option>
+                  <option value="VA" selected>Virginia</option>
+                  <option value="WA" selected>Washington</option>
+                  <option value="WV" selected>West Virginia</option>
+                  <option value="WI" selected>Wisconsin</option>
+                  <option value="WY" selected>Wyoming</option>
+                  <option value="AE" selected>Armed Forces Africa</option>
+                  <option value="AA" selected>
+                    Armed Forces Americas (except Canada)
+                  </option>
+                  <option value="AE" selected>Armed Forces Canada</option>
+                  <option value="AE" selected>Armed Forces Europe</option>
+                  <option value="AE" selected>Armed Forces Middle East</option>
+                  <option value="AP" selected>Armed Forces Pacific</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Zipcode</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="zip_code"
+                  id="zip_code"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button
+              type="submit"
+              class="btn btn-success"
+              onclick="GetDetails()"
+            >
+              Get Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

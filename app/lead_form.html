@@ -17,7 +17,7 @@
         // Creating Our XMLHttpRequest object
         var xhr = new XMLHttpRequest();
         let formData = {
-          lp_campaign_id: $('#lp_campaign_id').val(),
+          lp_campaign_id: '63a2437348ed7',
           first_name: $('#first_name').val(),
           last_name: $('#last_name').val(),
           phone_cell: $('#phone_cell').val(),
@@ -42,7 +42,7 @@
         };
 
         // Making our connection
-        var url = 'http://3.91.199.11/api/auth/lead-add';
+        var url = 'http://mortagelead.in/api/auth/lead-add';
         xhr.open('POST', url, true);
         xhr.setRequestHeader(
           'Content-type',
@@ -107,6 +107,110 @@
           console.log(JSON.parse(this.responseText));
           let leadid = JSON.parse(this.responseText);
           document.getElementById('new_lead_id').innerHTML = leadid.data.Leadid;
+          //  send data to mortgage API
+          let jornayaID = leadid.data.Leadid;
+
+          var xmttp = new XMLHttpRequest();
+          let mortgage_formData = {
+            lp_campaign_id: '63a2437348ed7',
+            jornaya_leadid: jornayaID,
+            phone_home: $('#phone_home').val(),
+            lp_campaign_key: 'xVzDrv2gTKcwCtMymdhZ',
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            phone_cell: $('#phone_cell').val(),
+            address: $('#address').val(),
+            city: $('#city').val(),
+            state: $('#state').val(),
+            zip_code: $('#zip_code').val(),
+            email_address: $('#email_address').val(),
+            property_type: $('#property_type').val(),
+            credit_dropdown: $('#credit_dropdown').val(),
+            property_use: $('#property_use').val(),
+            military_status: $('#military_status').val(),
+            loan_type: $('#loan_type').val(),
+            interest_rate: $('#interest_rate').val(),
+            mortgage_balance: $('#mortgage_balance').val(),
+            home_value: $('#home_value').val(),
+            cash_out: $('#cash_out').val(),
+            loan_amount: $('#loan_amount').val(),
+            mortgage_type: $('#mortgage_type').val(),
+            occupation_dropdown: $('#occupation_dropdown').val(),
+            loan_purpose: $('#loan_purpose').val(),
+          };
+
+          // Making our connection
+          var mortgage_url =
+            'https://nexleveldirect.leadspediatrack.com/post.do';
+          console.log('mortgage url', mortgage_url);
+          xmttp.open('POST', mortgage_url, true);
+          xmttp.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+          );
+
+          // function execute after request is successful
+          xmttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+          };
+          // Sending our request
+
+          let mortgage_finalData =
+            `lp_campaign_id=${mortgage_formData.lp_campaign_id}` +
+            '&' +
+            `jornaya_leadid=${mortgage_formData.jornaya_leadid}` +
+            '&' +
+            `phone_home=${mortgage_formData.phone_home}` +
+            '&' +
+            `lp_campaign_key=${mortgage_formData.lp_campaign_key}` +
+            '&' +
+            `first_name=${mortgage_formData.first_name}` +
+            '&' +
+            `last_name=${mortgage_formData.last_name}` +
+            '&' +
+            `phone_cell=${mortgage_formData.phone_cell}` +
+            '&' +
+            `address=${mortgage_formData.address}` +
+            '&' +
+            `city=${mortgage_formData.city}` +
+            '&' +
+            `state=${mortgage_formData.state}` +
+            '&' +
+            `zip_code=${mortgage_formData.zip_code}` +
+            '&' +
+            `email_address=${mortgage_formData.email_address}` +
+            '&' +
+            `property_type=${mortgage_formData.property_type}` +
+            '&' +
+            `credit_dropdown=${mortgage_formData.credit_dropdown}` +
+            '&' +
+            `property_use=${mortgage_formData.property_use}` +
+            '&' +
+            `military_status=${mortgage_formData.military_status}` +
+            '&' +
+            `loan_type=${mortgage_formData.loan_type}` +
+            '&' +
+            `interest_rate=${mortgage_formData.interest_rate}` +
+            '&' +
+            `mortgage_balance=${mortgage_formData.mortgage_balance}` +
+            '&' +
+            `home_value=${mortgage_formData.home_value}` +
+            '&' +
+            `cash_out=${mortgage_formData.cash_out}` +
+            '&' +
+            `loan_amount=${mortgage_formData.loan_amount}` +
+            '&' +
+            `mortgage_type=${mortgage_formData.mortgage_type}` +
+            '&' +
+            `occupation_dropdown=${mortgage_formData.occupation_dropdown}` +
+            '&' +
+            `loan_purpose=${mortgage_formData.loan_purpose}`;
+
+          xmttp.send(mortgage_finalData);
+          xmttp.onload = function () {
+            console.log('mortgage urls success', this.responseText);
+          };
         };
       }
     </script>
@@ -158,15 +262,14 @@
 
             <div class="col-md-3">
               <div class="form-group">
-                <label>Campaign Id</label>
-                <select
-                  name="campaign"
-                  id="lp_campaign_id"
+                <label>Phone Home</label>
+                <input
+                  type="text"
                   class="form-control"
-                >
-                  <option>Select Option</option>
-                  <option name="nld">NLD</option>
-                </select>
+                  required
+                  name="phone_home"
+                  id="phone_home"
+                />
               </div>
             </div>
 
