@@ -12,9 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      // funjction for submit the form data
       function SubmitData() {
-        // Creating Our XMLHttpRequest object
         var xhr = new XMLHttpRequest();
         let formData = {
           lp_campaign_id: '63a2437348ed7',
@@ -41,7 +39,6 @@
           loan_purpose: $('#loan_purpose').val(),
         };
 
-        // Making our connection
         var url = 'http://mortagelead.in/api/auth/lead-add';
         xhr.open('POST', url, true);
         xhr.setRequestHeader(
@@ -49,20 +46,16 @@
           'application/x-www-form-urlencoded'
         );
 
-        // function execute after request is successful
         xhr.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
           }
         };
-        // Sending our request
         let finalData =
           `lp_campaign_id=${formData.lp_campaign_id}` +
           '&' +
           `first_name=${formData.first_name}` +
           '&' +
           `last_name=${formData.last_name}` +
-          '&' +
-          `phone_cell=${formData.phone_cell}` +
           '&' +
           `address=${formData.address}` +
           '&' +
@@ -103,11 +96,8 @@
         xhr.send(finalData);
 
         xhr.onload = function () {
-          console.log(this.responseText);
-          console.log(JSON.parse(this.responseText));
           let leadid = JSON.parse(this.responseText);
           document.getElementById('new_lead_id').innerHTML = leadid.data.Leadid;
-          //  send data to mortgage API
           let jornayaID = leadid.data.Leadid;
 
           var xmttp = new XMLHttpRequest();
@@ -139,22 +129,18 @@
             loan_purpose: $('#loan_purpose').val(),
           };
 
-          // Making our connection
           var mortgage_url =
             'https://nexleveldirect.leadspediatrack.com/post.do';
-          console.log('mortgage url', mortgage_url);
           xmttp.open('POST', mortgage_url, true);
           xmttp.setRequestHeader(
             'Content-type',
             'application/x-www-form-urlencoded'
           );
 
-          // function execute after request is successful
           xmttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
             }
           };
-          // Sending our request
 
           let mortgage_finalData =
             `lp_campaign_id=${mortgage_formData.lp_campaign_id}` +
@@ -168,8 +154,6 @@
             `first_name=${mortgage_formData.first_name}` +
             '&' +
             `last_name=${mortgage_formData.last_name}` +
-            '&' +
-            `phone_cell=${mortgage_formData.phone_cell}` +
             '&' +
             `address=${mortgage_formData.address}` +
             '&' +
@@ -209,13 +193,30 @@
 
           xmttp.send(mortgage_finalData);
           xmttp.onload = function () {
-            console.log('mortgage urls success', this.responseText);
+            const parser = new DOMParser();
+            const responseXML = parser.parseFromString(
+              this.responseText,
+              'text/xml'
+            );
+            const result =
+              responseXML.getElementsByTagName('result')[0].textContent;
+            const leadId =
+              responseXML.getElementsByTagName('lead_id')[0].textContent;
+            const price =
+              responseXML.getElementsByTagName('price')[0].textContent;
+            const msg = responseXML.getElementsByTagName('msg')[0].textContent;
+            const error =
+              responseXML.getElementsByTagName('error')[0].textContent;
+            document.getElementById('journayaResult').innerHTML = result;
+            document.getElementById('journayaLeadId').innerHTML = leadId;
+            document.getElementById('journayaPrice').innerHTML = price;
+            document.getElementById('journayaMessage').innerHTML = msg;
+            document.getElementById('journayaError').innerHTML = error;
           };
         };
       }
     </script>
 
-    <!-- Style code started from here   -->
     <style>
       .heading {
         color: #75a2da;
@@ -240,6 +241,13 @@
       #new_lead_id {
         font-weight: 500;
       }
+      .journayaReponseBlock {
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .journayaReponseBlockValue {
+        font-weight: 500;
+      }
     </style>
   </head>
 
@@ -259,19 +267,6 @@
               type="hidden"
               value=""
             />
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Phone Home</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  required
-                  name="phone_home"
-                  id="phone_home"
-                />
-              </div>
-            </div>
 
             <div class="col-md-3">
               <div class="form-group">
@@ -300,6 +295,19 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label>Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="phone_home"
+                  id="phone_home"
+                />
+              </div>
+            </div>
+
+            <!-- <div class="col-md-3">
+              <div class="form-group">
+                <label>Phone Number</label>
                 <small
                   class="error"
                   style="color: blue; font-size: 16px; font-weight: 800"
@@ -312,7 +320,7 @@
                   id="phone_cell"
                 />
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-3">
               <div class="form-group">
@@ -654,7 +662,7 @@
         <button type="submit" class="btn btn-success" onclick="SubmitData()">
           Submit Now!
         </button>
-<br/>
+        <br />
         <span
           >By clicking "<b>Submit Now!</b>" you agree to the Terms of Service
           and Privacy Policy and to share your information with our lenders and
@@ -671,6 +679,32 @@
         <div class="col-12">
           <p id="style_new_lead_id">
             Jornaya Id : <span id="new_lead_id"></span>
+          </p>
+        </div>
+        <div class="col-12">
+          <p class="journayaReponseBlock">
+            Result :
+            <span class="journayaReponseBlockValue" id="journayaResult"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Lead Id :
+            <span id="journayaLeadId" class="journayaReponseBlockValue"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Price :
+            <span id="journayaPrice" class="journayaReponseBlockValue"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Message :
+            <span id="journayaMessage" class="journayaReponseBlockValue"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Error :
+            <span id="journayaError" class="journayaReponseBlockValue"></span>
           </p>
         </div>
       </div>

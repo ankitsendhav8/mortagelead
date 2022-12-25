@@ -12,6 +12,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+      function getUuidCode() {
+        const possibleCharacters =
+          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        let guid = '';
+        for (let i = 0; i < 36; i++) {
+          const randomCharacter = possibleCharacters.charAt(
+            Math.floor(Math.random() * possibleCharacters.length)
+          );
+          guid += randomCharacter;
+        }
+        if (guid) {
+          setTimeout(() => {
+            document.getElementsByClassName('lead_id_value').value = 'ghjbj';
+          }, 1000);
+        }
+        console.log(guid);
+      }
+      getUuidCode();
       // funjction for submit the form data
       function GetDetails() {
         // Creating Our XMLHttpRequest object
@@ -52,7 +71,8 @@
 
         xhr.setRequestHeader(
           'Content-type',
-          'application/x-www-form-urlencoded'
+          'application/x-www-form-urlencoded',
+          'cors'
         );
 
         // function execute after request is successful
@@ -114,16 +134,19 @@
                 <label>Lead ID</label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control lead_id_value"
                   required
                   name="lead_id"
                   id="lead_id"
+                  readonly
+                  value="d"
+                  disabled
                 />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label>Caller ID</label>
+                <label>Phone Number</label>
                 <input
                   type="text"
                   class="form-control"
@@ -293,7 +316,7 @@
               class="btn btn-success"
               onclick="GetDetails()"
             >
-              Get Details
+              Submit
             </button>
           </div>
         </div>
