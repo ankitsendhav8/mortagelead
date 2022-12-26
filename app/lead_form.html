@@ -12,13 +12,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+      function checkPhoneNumber() {
+        var phoneNumber = $('#phone_home').val();
+        if (phoneNumber.length >= 10) {
+          var xhr2 = new XMLHttpRequest();
+          var url1 = 'http://mortagelead.in/api/auth/check-phone';
+          // var url1 = 'http://localhost:2000/auth/check-phone';
+
+          xhr2.open('POST', url1, true);
+          xhr2.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+          );
+
+          xhr2.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+          };
+          xhr2.send(`phone_number=${phoneNumber}`);
+
+          xhr2.onload = function () {
+            let phoneResponse = JSON.parse(this.responseText);
+            if (phoneResponse.data) {
+              document.getElementById('phone_exist').innerHTML =
+                'Phone number already exists.';
+            } else {
+              document.getElementById('phone_exist').innerHTML = '';
+            }
+          };
+        }
+      }
+
       function SubmitData() {
         var xhr = new XMLHttpRequest();
         let formData = {
           lp_campaign_id: '63a2437348ed7',
           first_name: $('#first_name').val(),
           last_name: $('#last_name').val(),
-          phone_cell: $('#phone_cell').val(),
+          phone_cell: $('#phone_home').val(),
           address: $('#address').val(),
           city: $('#city').val(),
           state: $('#state').val(),
@@ -66,6 +97,8 @@
           `zip_code=${formData.zip_code}` +
           '&' +
           `email_address=${formData.email_address}` +
+          '&' +
+          `phone_cell=${formData.phone_cell}` +
           '&' +
           `property_type=${formData.property_type}` +
           '&' +
@@ -221,6 +254,10 @@
     </script>
 
     <style>
+      .exit_phone_color {
+        color: red;
+      }
+
       .heading {
         color: #75a2da;
         font-family: auto;
@@ -262,6 +299,8 @@
         </div>
       </div>
       <div class="row content-block">
+        <span class="exit_phone_color" id="phone_exist"></span>
+
         <form method="post">
           <div class="row">
             <input
@@ -270,7 +309,6 @@
               type="hidden"
               value=""
             />
-
             <div class="col-md-3">
               <div class="form-group">
                 <label>First Name</label>
@@ -302,12 +340,13 @@
                   type="text"
                   class="form-control"
                   required
+                  maxlength="10"
                   name="phone_home"
                   id="phone_home"
+                  onkeyup="checkPhoneNumber()"
                 />
               </div>
             </div>
-
             <!-- <div class="col-md-3">
               <div class="form-group">
                 <label>Phone Number</label>

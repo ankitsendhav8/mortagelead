@@ -67,5 +67,30 @@ class AuthController {
       });
     }
   };
+
+  checkPhoneNumber = async (req, res) => {
+    try {
+      const data = req.body.phone_number;
+      let checkPhone = await AuthService.checkphoneNumber(data);
+      if (checkPhone && checkPhone.length > 0) {
+        res.status(200).json({
+          success: 1,
+          message: 'Phone already exist',
+          data: true,
+        });
+      } else {
+        res.status(200).json({
+          success: 1,
+          message: 'No Phone matched',
+          data: false,
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        success: 0,
+        message: err.code,
+      });
+    }
+  };
 }
 export default new AuthController(AuthService);

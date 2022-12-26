@@ -7,9 +7,12 @@ class AuthService {
     return db('dataingestion').insert(data);
   };
   getLeadData = (id) => {
-    return db('dataingestion').select().where('id', id)
+    return db('dataingestion').select().where('id', id);
   };
 
+  checkphoneNumber = (phoneNumber) => {
+    return db('dataingestion').select().where('vPhoneCell', phoneNumber);
+  };
 }
 
 export default new AuthService();
