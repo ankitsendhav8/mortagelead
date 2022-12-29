@@ -12,25 +12,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      function getUuidCode() {
-        const possibleCharacters =
-          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        let guid = '';
-        for (let i = 0; i < 36; i++) {
-          const randomCharacter = possibleCharacters.charAt(
-            Math.floor(Math.random() * possibleCharacters.length)
-          );
-          guid += randomCharacter;
+    function getUuidCode() {
+      const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let guid = '';
+      for (let i = 0; i < 36; i++) {
+        const randomCharacter = possibleCharacters.charAt(
+          Math.floor(Math.random() * possibleCharacters.length)
+        );
+        if (i === 8 || i === 13 || i === 18 || i === 23) {
+          guid += '-';
         }
-        if (guid) {
-          setTimeout(() => {
-            document.getElementsByClassName('lead_id_value').value = 'ghjbj';
-          }, 1000);
-        }
-        console.log(guid);
+        guid += randomCharacter;
       }
-      getUuidCode();
+      return guid;
+    }
+
+    function setInputFieldValue() {
+      const inputField = document.getElementById('lead_id'); // get the input field element
+      const guid = getUuidCode(); // generate a new GUID
+      inputField.value = guid; // set the value of the input field to the generated GUID
+      console.log(inputField.value);
+
+    }
+
+    window.onload = function() {
+      setInputFieldValue();
+    }
+
+
       // funjction for submit the form data
       function GetDetails() {
         // Creating Our XMLHttpRequest object
@@ -83,7 +92,6 @@
         // Sending our request
 
         xhr.send();
-
         xhr.onload = function () {
           console.log('get response', this.responseText);
         };
@@ -100,20 +108,11 @@
         padding: 10px 43px;
         font-family: emoji;
       }
-
       .final-result {
         margin: 10px 31px 50px 31px;
         border: 1px solid #b7b3b3;
         padding: 6px;
         background-color: #d8dec6ad;
-      }
-      #style_new_lead_id {
-        font-size: 20px;
-        color: #219d21;
-        font-weight: 700;
-      }
-      #new_lead_id {
-        font-weight: 500;
       }
     </style>
   </head>
@@ -134,13 +133,11 @@
                 <label>Lead ID</label>
                 <input
                   type="text"
-                  class="form-control lead_id_value"
+                  class="form-control"
                   required
                   name="lead_id"
                   id="lead_id"
                   readonly
-                  value="d"
-                  disabled
                 />
               </div>
             </div>
@@ -150,7 +147,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  required
+                  required  
                   name="callerid"
                   id="callerid"
                 />
