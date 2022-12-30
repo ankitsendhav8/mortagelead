@@ -12,32 +12,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-    function getUuidCode() {
-      const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let guid = '';
-      for (let i = 0; i < 36; i++) {
-        const randomCharacter = possibleCharacters.charAt(
-          Math.floor(Math.random() * possibleCharacters.length)
-        );
-        if (i === 8 || i === 13 || i === 18 || i === 23) {
-          guid += '-';
-        }
-        guid += randomCharacter;
-      }
-      return guid;
-    }
+//     function getUuidCode() {
+//       const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//       let guid = '';
+//       for (let i = 0; i < 36; i++) {
+//         const randomCharacter = possibleCharacters.charAt(
+//           Math.floor(Math.random() * possibleCharacters.length)
+//         );
+//         if (i === 8 || i === 13 || i === 18 || i === 23) {
+//           guid += '-';
+//         }
+//         guid += randomCharacter;
+//       }
+//       return guid;
+//     }
 
-    function setInputFieldValue() {
-      const inputField = document.getElementById('lead_id'); // get the input field element
-      const guid = getUuidCode(); // generate a new GUID
-      inputField.value = guid; // set the value of the input field to the generated GUID
-      console.log(inputField.value);
+//     function setInputFieldValue() {
+//       const inputField = document.getElementById('lead_id'); // get the input field element
+//       const guid = getUuidCode(); // generate a new GUID
+//       inputField.value = guid; // set the value of the input field to the generated GUID
+//       console.log(inputField.value);
 
-    }
+//     }
 
-    window.onload = function() {
-      setInputFieldValue();
-    }
+//     window.onload = function() {
+//       setInputFieldValue();
+//     }
 
 
       // funjction for submit the form data
