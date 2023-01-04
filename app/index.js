@@ -28,9 +28,7 @@ class ExpressApp {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
     this.app.use('/public', express.static('app'));
-    this.app.use(cors({
-      origin : 'http://mortagelead.in/api/public/get_mortgage_form.html'
-    }));
+    this.app.use(cors());
     this.app.use('/', Routes);
     this.app.use((req, res, next) => {
       next(createError(404));
@@ -39,15 +37,11 @@ class ExpressApp {
     // error handler
     // eslint-disable-next-line no-unused-vars
     this.app.use((err, req, res, next) => {
-      res.append('Access-Control-Allow-Origin', ['*']);
-      res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      res.append('Access-Control-Allow-Headers', 'Content-Type');
       res.s.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};
       logService.error(err.message);
       res.status(err.status || 500);
       res.render('error');
-      next();
     });
   }
 }
