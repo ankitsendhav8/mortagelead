@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lead Genration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+//     function getUuidCode() {
+//       const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//       let guid = '';
+//       for (let i = 0; i < 36; i++) {
+//         const randomCharacter = possibleCharacters.charAt(
+//           Math.floor(Math.random() * possibleCharacters.length)
+//         );
+//         if (i === 8 || i === 13 || i === 18 || i === 23) {
+//           guid += '-';
+//         }
+//         guid += randomCharacter;
+//       }
+//       return guid;
+//     }
+
+//     function setInputFieldValue() {
+//       const inputField = document.getElementById('lead_id'); // get the input field element
+//       const guid = getUuidCode(); // generate a new GUID
+//       inputField.value = guid; // set the value of the input field to the generated GUID
+//       console.log(inputField.value);
+
+//     }
+
+//     window.onload = function() {
+//       setInputFieldValue();
+//     }
+
+
+      // funjction for submit the form data
+      function GetDetails() {
+        // Creating Our XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        let formData = {
+          callerid: $('#callerid').val(),
+          lead_id: $('#lead_id').val(),
+          loan_amount: $('#loan_amount').val(),
+        };
+        let finalData =
+          `callerid=${formData.callerid}` +
+          '&' +
+          `lead_id=${formData.lead_id}` +
+          '&' +
+          `loan_amount=${formData.loan_amount}` 
+          ;
+        // Making our connection
+        var url =
+          `https://display.ringba.com/enrich/2055879815554139326?` + finalData;
+        xhr.open('GET', url, true);
+
+        xhr.setRequestHeader(
+          'Content-type',
+          'application/x-www-form-urlencoded',
+          'cors'
+        );
+
+        // function execute after request is successful
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+          }
+        };
+        // Sending our request
+
+        xhr.send();
+        xhr.onload = function () {
+          console.log('get response', this.responseText);
+        };
+      }
+    </script>
+
+    <!-- Style code started from here   -->
+    <style>
+      .heading {
+        color: #75a2da;
+        font-family: auto;
+      }
+      .content-block {
+        padding: 10px 43px;
+        font-family: emoji;
+      }
+      .final-result {
+        margin: 10px 31px 50px 31px;
+        border: 1px solid #b7b3b3;
+        padding: 6px;
+        background-color: #d8dec6ad;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="heading">Mortgage First Form</h1>
+        </div>
+      </div>
+
+      <div class="row content-block">
+        <form method="get">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Lead ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  name="lead_id"
+                  id="lead_id"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  required  
+                  name="callerid"
+                  id="callerid"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label>Loan Amount</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    required
+                    name="loan_amount"  
+                    id="loan_amount"
+                  />
+                </div>
+              </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button
+              type="submit"
+              class="btn btn-success"
+              onclick="GetDetails()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
