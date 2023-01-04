@@ -39,11 +39,15 @@ class ExpressApp {
     // error handler
     // eslint-disable-next-line no-unused-vars
     this.app.use((err, req, res, next) => {
+      res.append('Access-Control-Allow-Origin', ['*']);
+      res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+      res.append('Access-Control-Allow-Headers', 'Content-Type');
       res.s.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};
       logService.error(err.message);
       res.status(err.status || 500);
       res.render('error');
+      next();
     });
   }
 }
