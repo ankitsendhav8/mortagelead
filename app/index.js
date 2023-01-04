@@ -30,7 +30,7 @@ class ExpressApp {
     this.app.use('/public', express.static('app'));
     this.app.use(cors({
       origin : 'http://mortagelead.in/api/public/get_mortgage_form.html'
-    }
+    }));
     this.app.use('/', Routes);
     this.app.use((req, res, next) => {
       next(createError(404));
