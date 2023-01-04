@@ -28,14 +28,13 @@ class ExpressApp {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
     this.app.use('/public', express.static('app'));
-    this.app.use(cors());
+    this.app.use(cors({
+      origin : 'http://mortagelead.in/api/public/get_mortgage_form.html'
+    }
     this.app.use('/', Routes);
     this.app.use((req, res, next) => {
       next(createError(404));
     });
-    this.app.use(cors({
-      origin : 'http://mortagelead.in/api/public/lead_form.html'
-    }
     this.app.use(authMiddleWare());
     // error handler
     // eslint-disable-next-line no-unused-vars
