@@ -132,6 +132,123 @@
           let leadid = JSON.parse(this.responseText);
           document.getElementById('new_lead_id').innerHTML = leadid.data.Leadid;
           let jornayaID = leadid.data.Leadid;
+          let mortgageUrl = leadid.data.new_mortgage_url;
+
+          var xmttp = new XMLHttpRequest();
+          let mortgage_formData = {
+            lp_campaign_id: '63a2437348ed7',
+            jornaya_leadid: jornayaID,
+            phone_home: $('#phone_home').val(),
+            lp_campaign_key: 'xVzDrv2gTKcwCtMymdhZ',
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            phone_cell: $('#phone_cell').val(),
+            address: $('#address').val(),
+            city: $('#city').val(),
+            state: $('#state').val(),
+            zip_code: $('#zip_code').val(),
+            email_address: $('#email_address').val(),
+            property_type: $('#property_type').val(),
+            credit_dropdown: $('#credit_dropdown').val(),
+            property_use: $('#property_use').val(),
+            military_status: $('#military_status').val(),
+            loan_type: $('#loan_type').val(),
+            interest_rate: $('#interest_rate').val(),
+            mortgage_balance: $('#mortgage_balance').val(),
+            home_value: $('#home_value').val(),
+            cash_out: $('#cash_out').val(),
+            loan_amount: $('#loan_amount').val(),
+            mortgage_type: $('#mortgage_type').val(),
+            occupation_dropdown: $('#occupation_dropdown').val(),
+            loan_purpose: $('#loan_purpose').val(),
+          };
+
+          var mortgage_url = mortgageUrl;
+          xmttp.open('POST', mortgage_url, true);
+          xmttp.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+          );
+
+          xmttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+          };
+
+          let mortgage_finalData =
+            `lp_campaign_id=${mortgage_formData.lp_campaign_id}` +
+            '&' +
+            `jornaya_leadid=${mortgage_formData.jornaya_leadid}` +
+            '&' +
+            `phone_home=${mortgage_formData.phone_home}` +
+            '&' +
+            `lp_campaign_key=${mortgage_formData.lp_campaign_key}` +
+            '&' +
+            `first_name=${mortgage_formData.first_name}` +
+            '&' +
+            `last_name=${mortgage_formData.last_name}` +
+            '&' +
+            `address=${mortgage_formData.address}` +
+            '&' +
+            `city=${mortgage_formData.city}` +
+            '&' +
+            `state=${mortgage_formData.state}` +
+            '&' +
+            `zip_code=${mortgage_formData.zip_code}` +
+            '&' +
+            `email_address=${mortgage_formData.email_address}` +
+            '&' +
+            `property_type=${mortgage_formData.property_type}` +
+            '&' +
+            `credit_dropdown=${mortgage_formData.credit_dropdown}` +
+            '&' +
+            `property_use=${mortgage_formData.property_use}` +
+            '&' +
+            `military_status=${mortgage_formData.military_status}` +
+            '&' +
+            `loan_type=${mortgage_formData.loan_type}` +
+            '&' +
+            `interest_rate=${mortgage_formData.interest_rate}` +
+            '&' +
+            `mortgage_balance=${mortgage_formData.mortgage_balance}` +
+            '&' +
+            `home_value=${mortgage_formData.home_value}` +
+            '&' +
+            `cash_out=${mortgage_formData.cash_out}` +
+            '&' +
+            `loan_amount=${mortgage_formData.loan_amount}` +
+            '&' +
+            `mortgage_type=${mortgage_formData.mortgage_type}` +
+            '&' +
+            `occupation_dropdown=${mortgage_formData.occupation_dropdown}` +
+            '&' +
+            `loan_purpose=${mortgage_formData.loan_purpose}`;
+
+          xmttp.send(mortgage_finalData);
+          xmttp.onload = function () {
+            const parser = new DOMParser();
+            const responseXML = parser.parseFromString(
+              this.responseText,
+              'text/xml'
+            );
+            const result =
+              responseXML.getElementsByTagName('result')[0].textContent;
+            const leadId =
+              responseXML.getElementsByTagName('lead_id')[0].textContent;
+            const msg = responseXML.getElementsByTagName('msg')[0].textContent;
+
+            document.getElementById('journayaResult').innerHTML = result;
+            document.getElementById('journayaLeadId').innerHTML = leadId;
+            document.getElementById('journayaMessage').innerHTML = msg;
+
+            if (responseXML.getElementsByTagName('error').length) {
+              const error =
+                responseXML.getElementsByTagName('error')[0].textContent;
+              document.getElementById('journayaError').innerHTML = error;
+            } else {
+              document.getElementById('journayaError').innerHTML = '-';
+            }
+          };
         };
       }
     </script>
@@ -606,7 +723,27 @@
             Jornaya Id : <span id="new_lead_id"></span>
           </p>
         </div>
-        
+        <div class="col-12">
+          <p class="journayaReponseBlock">
+            Result :
+            <span class="journayaReponseBlockValue" id="journayaResult"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Lead Id :
+            <span id="journayaLeadId" class="journayaReponseBlockValue"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Message :
+            <span id="journayaMessage" class="journayaReponseBlockValue"></span>
+          </p>
+
+          <p class="journayaReponseBlock">
+            Error :
+            <span id="journayaError" class="journayaReponseBlockValue"></span>
+          </p>
+        </div>
       </div>
     </div>
   </body>

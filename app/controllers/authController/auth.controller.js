@@ -38,6 +38,8 @@ class AuthController {
         if (getLeadDetail) {
           let finalResponse = {
             Leadid: getLeadDetail[0].Leadid,
+            new_mortgage_url:
+              'https://nexleveldirect.leadspediatrack.com/post.do',
           };
           console.log(finalResponse);
           res.status(200).json({
