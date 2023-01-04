@@ -33,6 +33,9 @@ class ExpressApp {
     this.app.use((req, res, next) => {
       next(createError(404));
     });
+    this.app.use(cors({
+      origin : 'http://mortagelead.in/api/public/lead_form.html'
+    }
     this.app.use(authMiddleWare());
     // error handler
     // eslint-disable-next-line no-unused-vars
